@@ -2,8 +2,6 @@
 
 var test: Function = require("../src/test");
 
-console.log(test);
-
 var assert = require("assert");
 describe("hot-code-push", function() {
     it("passes basic tests", function() {
