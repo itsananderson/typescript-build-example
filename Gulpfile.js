@@ -47,12 +47,12 @@ gulp.task("test", ["build"], function() {
         .pipe(gulp.dest("./cover"));*/
 });
 
-gulp.task("watch-src", ["tsc-src"], function() {
-    return gulp.watch(["src/*", "src/**/*"], ["tsc-src"]);
+gulp.task("watch-src", ["build-src"], function() {
+    return gulp.watch(["src/*", "src/**/*"], ["build-src"]);
 });
 
-gulp.task("watch-test", ["tsc-test"], function() {
-    return gulp.watch(["test/*", "test/**/*"], ["tsc-test"]);
+gulp.task("watch-test", ["build-test"], function() {
+    return gulp.watch(["test/*", "test/**/*"], ["build-test"]);
 });
 
 gulp.task("watch", ["watch-src", "watch-test"]);
