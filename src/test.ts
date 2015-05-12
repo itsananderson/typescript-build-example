@@ -1,6 +1,5 @@
 var foo: string = "bar";
-var bar: number = 123;
 
-module.exports = () => {
-    return foo + bar;
+module.exports = (value: number = 123) => {
+    return foo + value;
 };
