@@ -19,7 +19,7 @@ describe("hot-code-push", function() {
         assert.equal(test(), "bar123", "Return from test() should be 'bar123'");
     });
 
-    it("can run a failing test", function() {
-        assert.equal(test(), "bar1234", "Return from test() should be 'bar1234'");
+    it("can pass a number to test()", function() {
+        assert.equal(test(1234), "bar1234", "Return from test(1234) should be 'bar1234'");
     });
 });
