@@ -14,7 +14,7 @@ describe("hot-code-push", function() {
         setTimeout(function() {
             assert(true, "True should still be true");
             done();
-        }, 100);
+        }, 10);
     });
 
     it("can call an included function", function() {
