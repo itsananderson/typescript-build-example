@@ -10,8 +10,7 @@
     "type": "git",
     "url": "git@github.com:itsananderson/typescript-build-example.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Will Anderson",
   "license": "MIT",
   "dependencies": {
@@ -23,7 +22,7 @@
     "gulp-jscoverage": "^0.1.0",
     "gulp-mocha": "^2.0.1",
     "gulp-tsc": "^0.9.4",
-    "gulp-typescript": "^2.6.0",
+    "gulp-typescript": "~2.6.0",
     "istanbul": "^0.3.13",
     "mocha": "^2.2.4",
     "through2": "^0.6.5"
