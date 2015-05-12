@@ -10,23 +10,23 @@ gulp.task("clean", function(cb) {
     ], cb);
 });
 
-gulp.task("tsc-src", function() {
-    return gulp.src(["./src/*.ts"])
+gulp.task("build-src", function() {
+    return gulp.src(["./src/*.ts", "./src/**/*.ts"])
         .pipe(typescript())
         .js
         .pipe(gulp.dest("./bin/src"));
 });
 
-gulp.task("tsc-test", function() {
-    return gulp.src(["./test/*.ts"])
+gulp.task("build-test", function() {
+    return gulp.src(["./test/*.ts", "./test/**/*.ts"])
         .pipe(typescript())
         .js
         .pipe(gulp.dest("./bin/test"));
 });
 
-gulp.task("tsc", ["tsc-src", "tsc-test"]);
+gulp.task("build", ["build-src", "build-test"]);
 
-gulp.task("test", ["tsc"], function() {
+gulp.task("test", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
         //.pipe(cover.instrument({
         //    pattern: ['bin/src/*.js', 'bin/src/**/*.js'],
