@@ -2,7 +2,7 @@
 
 var express = require("express");
 var app = express();
-var pkg = require("./package");
+var pkg = require("../package");
 
 app.set("port", process.env.PORT || 3000);
 
