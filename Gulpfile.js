@@ -2,6 +2,13 @@ var gulp = require("gulp");
 var typescript = require("gulp-typescript");
 var mocha = require("gulp-mocha");
 var cover = require("gulp-coverage");
+var del = require("del");
+
+gulp.task("clean", function(cb) {
+    del([
+        "bin/**/*"
+    ], cb);
+});
 
 gulp.task("tsc-src", function() {
     return gulp.src(["./src/*.ts"])
