@@ -2,8 +2,6 @@
 
 var test: Function = require("../src/test");
 
-console.log(test);
-
 var assert = require("assert");
 describe("hot-code-push", function() {
     it("passes basic tests", function() {
@@ -19,5 +17,9 @@ describe("hot-code-push", function() {
 
     it("can call an included function", function() {
         assert.equal(test(), "bar123", "Return from test() should be 'bar123'");
+    });
+
+    it("can pass a number to test()", function() {
+        assert.equal(test(1234), "bar1234", "Return from test(1234) should be 'bar1234'");
     });
 });
