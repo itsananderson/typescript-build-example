@@ -21,14 +21,14 @@ gulp.task("tsc", ["tsc-src", "tsc-test"]);
 
 gulp.task("test", ["tsc"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
-        .pipe(cover.instrument({
-            pattern: ['bin/src/*.js', 'bin/src/**/*.js'],
-            debugDirectory: 'debug'
-        }))
-        .pipe(mocha({ reporter: "spec"}))
-        .pipe(cover.gather())
+        //.pipe(cover.instrument({
+        //    pattern: ['bin/src/*.js', 'bin/src/**/*.js'],
+        //    debugDirectory: 'debug'
+        //}))
+        .pipe(mocha({ reporter: "spec"}));
+        /*.pipe(cover.gather())
         .pipe(cover.format())
-        .pipe(gulp.dest("./cover"));
+        .pipe(gulp.dest("./cover"));*/
 });
 
 gulp.task("watch-src", ["tsc-src"], function() {
