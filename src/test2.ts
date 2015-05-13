@@ -1,3 +1,3 @@
-var test = require("./test");
+var test: Function = require("./test");
 
 module.exports = test();

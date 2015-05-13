@@ -1,8 +1,12 @@
 var gulp = require("gulp");
 var typescript = require("gulp-typescript");
+var merge = require("merge2");
 var mocha = require("gulp-mocha");
 var cover = require("gulp-coverage");
 var del = require("del");
+
+var tsSrcProj = typescript.createProject({noExternalResolve: true});
+var tsTestProj = typescript.createProject({noExternalResolve: true});
 
 gulp.task("clean", function(cb) {
     del([
@@ -13,27 +17,25 @@ gulp.task("clean", function(cb) {
 gulp.task("build-copy", function() {
     return gulp.src([
         "./*.json", "**/*.json",
-        "!node_modules/*.json", "!node_modules/**/*.json",
-        "./*.js", "**/*.js", "!bin/*.js", "!bin/**/*.js", "!Gulpfile.js",
-        "!node_modules/*.js", "!node_modules/**/*.js"])
+        "./*.js", "**/*.js",
+        "!Gulpfile.js",
+        "!node_modules/*", "!node_modules/**/*",
+        "!bin/*", "!bin/**/*",])
         .pipe(gulp.dest("./bin"));
 });
 
 gulp.task("build-src", function() {
-    return gulp.src(["./src/*.ts", "./src/**/*.ts"])
-        .pipe(typescript())
-        .js
-        .pipe(gulp.dest("./bin/src"));
 });
 
-gulp.task("build-test", function() {
-    return gulp.src(["./test/*.ts", "./test/**/*.ts"])
-        .pipe(typescript())
-        .js
-        .pipe(gulp.dest("./bin/test"));
+gulp.task("build", function() {
+    var srcResult = gulp.src(["./src/*.ts", "./src/**/*.ts", "./definitions/*.d.ts"])
+            .pipe(typescript(tsSrcProj));
+    var testResult = gulp.src(["./test/*.ts", "./test/**/*.ts", "./definitions/*.d.ts"])
+            .pipe(typescript(tsTestProj));
+    return merge([
+        srcResult.js.pipe(gulp.dest("./bin/src")),
+        testResult.js.pipe(gulp.dest("./bin/test"))]);
 });
-
-gulp.task("build", ["build-copy", "build-src", "build-test"]);
 
 gulp.task("test", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
@@ -47,14 +49,8 @@ gulp.task("test", ["build"], function() {
         .pipe(gulp.dest("./cover"));*/
 });
 
-gulp.task("watch-src", ["build-src"], function() {
-    return gulp.watch(["src/*", "src/**/*"], ["build-src"]);
+gulp.task("watch", ["test"], function() {
+    return gulp.watch(["src/*", "src/**/*", "test/*", "test/**/*"], ["test"]);
 });
-
-gulp.task("watch-test", ["build-test"], function() {
-    return gulp.watch(["test/*", "test/**/*"], ["build-test"]);
-});
-
-gulp.task("watch", ["watch-src", "watch-test"]);
 
 gulp.task("default", ["test"]);
