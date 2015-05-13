@@ -1,5 +1,3 @@
-/// <reference path='..\harness\harness.ts' />
-
 var test: Function = require("../src/test");
 var test2: string = require("../src/test2");
 
