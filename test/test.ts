@@ -1,5 +1,5 @@
-var test: Function = require("../src/test");
-var test2: string = require("../src/test2");
+var test: Function = require("../lib/test");
+var test2: string = require("../lib/test2");
 
 var assert = require("assert");
 describe("hot-code-push", function() {

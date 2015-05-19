@@ -24,23 +24,20 @@ gulp.task("build-copy", function() {
         .pipe(gulp.dest("./bin"));
 });
 
-gulp.task("build-src", function() {
-});
-
 gulp.task("build", function() {
-    var srcResult = gulp.src(["./src/*.ts", "./src/**/*.ts", "./definitions/*.d.ts"])
+    var libResult = gulp.src(["./lib/*.ts", "./lib/**/*.ts", "./definitions/*.d.ts"])
             .pipe(typescript(tsSrcProj));
     var testResult = gulp.src(["./test/*.ts", "./test/**/*.ts", "./definitions/*.d.ts"])
             .pipe(typescript(tsTestProj));
     return merge([
-        srcResult.js.pipe(gulp.dest("./bin/src")),
+        libResult.js.pipe(gulp.dest("./bin/lib")),
         testResult.js.pipe(gulp.dest("./bin/test"))]);
 });
 
 gulp.task("test", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
         //.pipe(cover.instrument({
-        //    pattern: ['bin/src/*.js', 'bin/src/**/*.js'],
+        //    pattern: ['bin/lib/*.js', 'bin/lib/**/*.js'],
         //    debugDirectory: 'debug'
         //}))
         .pipe(mocha({ reporter: "spec"}));
@@ -50,7 +47,7 @@ gulp.task("test", ["build"], function() {
 });
 
 gulp.task("watch", ["test"], function() {
-    return gulp.watch(["src/*", "src/**/*", "test/*", "test/**/*"], ["test"]);
+    return gulp.watch(["lib/*", "lib/**/*", "test/*", "test/**/*"], ["test"]);
 });
 
 gulp.task("default", ["test"]);
