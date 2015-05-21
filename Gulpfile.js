@@ -36,6 +36,11 @@ gulp.task("build", function() {
 
 gulp.task("test", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
+        .pipe(mocha({ reporter: "spec"}));
+});
+
+gulp.task("cover", ["build"], function() {
+    return gulp.src("./bin/test/*.js", { read: false })
         .pipe(cover.instrument({
             pattern: ['bin/lib/*.js', 'bin/lib/**/*.js']
         }))
