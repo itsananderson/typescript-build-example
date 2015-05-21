@@ -1,5 +1,7 @@
 var foo: string = "bar";
 
-module.exports = (value: number = 123) => {
+function test(value: number = 123) {
     return foo + value;
-};
+}
+
+export = test

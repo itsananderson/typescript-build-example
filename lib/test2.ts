@@ -1,3 +1,5 @@
-var test: Function = require("./test");
+// <reference path="../definitions/harness.d.ts" />
 
-module.exports = test();
+var test: string = require("./test")();
+
+export = test;

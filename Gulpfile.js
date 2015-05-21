@@ -5,8 +5,8 @@ var mocha = require("gulp-mocha");
 var cover = require("gulp-coverage");
 var del = require("del");
 
-var tsSrcProj = typescript.createProject({noExternalResolve: true});
-var tsTestProj = typescript.createProject({noExternalResolve: true});
+var tsSrcProj = typescript.createProject({noExternalResolve: true, module: 'commonjs'});
+var tsTestProj = typescript.createProject({noExternalResolve: true, module: 'commonjs'});
 
 gulp.task("clean", function(cb) {
     del([
@@ -20,14 +20,14 @@ gulp.task("build-copy", function() {
         "./*.js", "**/*.js",
         "!Gulpfile.js",
         "!node_modules/*", "!node_modules/**/*",
-        "!bin/*", "!bin/**/*",])
+        "!bin/*", "!bin/**/*"])
         .pipe(gulp.dest("./bin"));
 });
 
 gulp.task("build", function() {
-    var libResult = gulp.src(["./lib/*.ts", "./lib/**/*.ts", "./definitions/*.d.ts"])
+    var libResult = gulp.src(["./lib/*.ts", "./lib/**/*.ts", "./definitions/**/*.d.ts", "./definitions/harness.d.ts"])
             .pipe(typescript(tsSrcProj));
-    var testResult = gulp.src(["./test/*.ts", "./test/**/*.ts", "./definitions/*.d.ts"])
+    var testResult = gulp.src(["./test/*.ts", "./test/**/*.ts", "./definitions/**/*.d.ts", "./definitions/test-harness.d.ts"])
             .pipe(typescript(tsTestProj));
     return merge([
         libResult.js.pipe(gulp.dest("./bin/lib")),
@@ -36,14 +36,13 @@ gulp.task("build", function() {
 
 gulp.task("test", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
-        //.pipe(cover.instrument({
-        //    pattern: ['bin/lib/*.js', 'bin/lib/**/*.js'],
-        //    debugDirectory: 'debug'
-        //}))
-        .pipe(mocha({ reporter: "spec"}));
-        /*.pipe(cover.gather())
+        .pipe(cover.instrument({
+            pattern: ['bin/lib/*.js', 'bin/lib/**/*.js']
+        }))
+        .pipe(mocha({ reporter: "spec"}))
+        .pipe(cover.gather())
         .pipe(cover.format())
-        .pipe(gulp.dest("./cover"));*/
+        .pipe(gulp.dest("./cover"));
 });
 
 gulp.task("watch", ["test"], function() {

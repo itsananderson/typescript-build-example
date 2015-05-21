@@ -1,3 +1,5 @@
+// <reference path="..\definitions\test-harness.d.ts" />
+
 var test: Function = require("../lib/test");
 var test2: string = require("../lib/test2");
 
@@ -19,7 +21,7 @@ describe("hot-code-push", function() {
     });
 
     it("can check the value of test2.ts", function() {
-        assert.equal(test2, "bar123", "Value of test2 should be 'bar123'");
+        assert.equal(test2, "bar123", "Value of test2 should be 'bar123' and is " + test2);
     });
 
     it("can pass a number to test()", function() {

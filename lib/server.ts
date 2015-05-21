@@ -1,3 +1,5 @@
+/// <reference path="../definitions/harness.d.ts" />
+
 var express = require("express");
 var app = express();
 var pkg = require("../package");
