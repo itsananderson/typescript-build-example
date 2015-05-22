@@ -1,5 +1,8 @@
 // <reference path="..\definitions\test-harness.d.ts" />
 
+var request = require("supertest");
+var pkg = require("../package");
+var server: Function = require("../lib/server");
 var test: Function = require("../lib/test");
 var test2: string = require("../lib/test2");
 
@@ -26,5 +29,11 @@ describe("hot-code-push", function() {
 
     it("can pass a number to test()", function() {
         assert.equal(test(1234), "bar1234", "Return from test(1234) should be 'bar1234'");
+    });
+
+    it("can call the server", function(done) {
+        request(server)
+            .get("/")
+            .expect("Hello, World! " + pkg.version, done);
     });
 });
