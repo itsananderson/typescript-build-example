@@ -3,6 +3,7 @@ var typescript = require("gulp-typescript");
 var merge = require("merge2");
 var mocha = require("gulp-mocha");
 var cover = require("gulp-coverage");
+var istanbul = require("gulp-istanbul");
 var del = require("del");
 
 var tsSrcProj = typescript.createProject({noExternalResolve: true, module: 'commonjs'});
@@ -39,6 +40,18 @@ gulp.task("test", ["build"], function() {
         .pipe(mocha({ reporter: "spec"}));
 });
 
+gulp.task("istanbul", ["build"], function(cb) {
+    gulp.src("./bin/lib/*.js")
+        .pipe(istanbul({includeUntested: true}))
+        .pipe(istanbul.hookRequire())
+        .on("finish", function() {
+            gulp.src("./bin/test/*.js", { read: false })
+                .pipe(mocha({ reporter: "spec" }))
+                .pipe(istanbul.writeReports())
+                .on("end", cb);
+        });
+});
+
 gulp.task("cover", ["build"], function() {
     return gulp.src("./bin/test/*.js", { read: false })
         .pipe(cover.instrument({
@@ -54,4 +67,4 @@ gulp.task("watch", ["test"], function() {
     return gulp.watch(["lib/*", "lib/**/*", "test/*", "test/**/*"], ["test"]);
 });
 
-gulp.task("default", ["test"]);
+gulp.task("default", ["istanbul"]);
