@@ -14,7 +14,8 @@
   "author": "Will Anderson",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "gulp-istanbul": "^0.9.0"
   },
   "devDependencies": {
     "del": "^1.1.1",
