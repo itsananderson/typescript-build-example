@@ -25,7 +25,7 @@ gulp.task("build-copy", function() {
         .pipe(gulp.dest("./bin"));
 });
 
-gulp.task("build", function() {
+gulp.task("build", ["build-copy"], function() {
     var libResult = gulp.src(["./lib/*.ts", "./lib/**/*.ts", "./definitions/**/*.d.ts", "./definitions/harness.d.ts"])
             .pipe(typescript(tsSrcProj));
     var testResult = gulp.src(["./test/*.ts", "./test/**/*.ts", "./definitions/**/*.d.ts", "./definitions/test-harness.d.ts"])
