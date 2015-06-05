@@ -36,4 +36,10 @@ describe("hot-code-push", function() {
             .get("/")
             .expect("Hello, World! " + pkg.version, done);
     });
+
+    it("can call the test route", function(done) {
+        request(server)
+            .get("/test")
+            .expect("Hello test", done);
+    });
 });

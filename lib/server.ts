@@ -10,4 +10,8 @@ app.get("/", function(req, res) {
     res.send("Hello, World! " + pkg.version);
 });
 
+app.get("/test", function(req, res) {
+    res.send("Hello test");
+});
+
 export = app;
