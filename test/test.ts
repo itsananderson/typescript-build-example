@@ -40,6 +40,6 @@ describe("hot-code-push", function() {
     it("can call the test route", function(done) {
         request(server)
             .get("/test")
-            .expect("Hello test");
+            .expect("Hello test", done);
     });
 });
